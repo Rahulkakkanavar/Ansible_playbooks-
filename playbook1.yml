@@ -1,0 +1,15 @@
+---
+- name: Install git and clone repo
+  hosts: all
+  become: true
+  tasks:
+    - name: Install git 
+      yum:
+        name: git
+        state: present
+    - name: clone repo
+      git: 
+       repo: https://github.com/Rahulkakkanavar/docker-project.git
+       dest: /mnt/gitdevops/
+
+...
