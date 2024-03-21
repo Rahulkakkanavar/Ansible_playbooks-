@@ -1,0 +1,47 @@
+---
+- name: Install Tomcat 8 on EC2 instances
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Java
+      package:
+        name: java-1.8.0-openjdk-devel.x86_64
+        state: present
+    
+    - name: create a directory
+      file:
+        path: /mnt/tomcat
+        state: directory
+
+    - name: Download Tomcat 8 tarball
+      get_url:
+        url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.87/bin/apache-tomcat-9.0.87.zip
+        dest: /mnt/tomcat
+
+    - name: Unzip tomcat server
+      ansible.builtin.unarchive: 
+        src: /mnt/tomcat/apache-tomcat-9.0.87.zip
+        dest: /mnt/tomcat/
+        remote_src: yes
+
+    - name: file permission
+      file: 
+        path: /mnt/tomcat/apache-tomcat-9.0.87/bin/startup.sh
+        owner: rahul 
+        group: rahul
+        mode: 0777   
+        
+    - name: file permission
+      file:
+        path: /mnt/tomcat/apache-tomcat-9.0.87/bin/catalina.sh
+        owner: rahul
+        group: rahul
+        mode: 0777
+
+    - name: Start Tomcat Service
+      shell: ./startup.sh
+      args: 
+        chdir: /mnt/tomcat/apache-tomcat-9.0.87/bin
+        
+       
+...
