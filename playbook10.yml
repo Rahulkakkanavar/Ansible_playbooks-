@@ -1,0 +1,23 @@
+#Requirement: To create multiple users and files/directories in user's home directories.
+
+---
+- name: Create users and create files/dir in users home dir
+  hosts: all
+  become: true
+  tasks:
+   - name: Create multiple users
+     user:
+      name: "{{item.a}}"
+      password: "{{item.b}}"
+      home: "{{item.c}}"
+     with_items:
+      - {a: Farhan,b: durgasoft,c: /home/Farhan}
+      - {a: rr,b: durgasoft,c: /home/rr}
+   - name: creating files and directories in users home dir
+     file:
+      name: "{{item.a}}"
+      state: "{{item.b}}"
+     with_items:
+      - {a: /home/Farhan/file1,b: touch}
+      - {a: /home/rr/dir1,b: directory}
+...
