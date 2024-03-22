@@ -1,0 +1,22 @@
+#Handler is a piece of code which is executed, if some other module is executed successfully and it has made some changes.
+
+---
+- name: Confugure apache2 using handlers
+  hosts: all
+  become: true
+  tasks:
+   - name: installing httd 
+     yum:
+      name: httpd
+      state: present
+   - name: Edit index.html file
+     copy:
+      content: "Logiclabs\n"
+      dest: /var/www/html/index.html
+     notify: Restart httpd
+  handlers:
+   - name: Restart httpd
+     service:
+      name: httpd
+      state: restarted
+...
