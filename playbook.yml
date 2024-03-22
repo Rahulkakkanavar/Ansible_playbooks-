@@ -1,0 +1,16 @@
+---
+- name: Install necessary packages
+  hosts: all
+  become: yes  # Run tasks with sudo/root privileges
+
+  tasks:
+    - name: Install required packages
+      yum:
+        name: 
+          - tree
+          - git
+          - java-1.8.0-openjdk-devel.x86_64
+          - maven
+        state: present
+...
+
