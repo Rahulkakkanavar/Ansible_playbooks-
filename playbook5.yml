@@ -1,0 +1,11 @@
+---
+- name: Install software packages
+  hosts: all
+  become: true
+  tasks:
+   - name: Install/uninstall/update etc
+     yum:
+      name: "{{a}}"
+      state: "{{b}}"
+      update_cache: "{{c}}"
+...
