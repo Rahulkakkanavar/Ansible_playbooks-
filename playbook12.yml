@@ -1,0 +1,26 @@
+# Error haandling using:- blocks, rescue, always
+
+---
+- name: Error handling
+  hosts: all
+  become: true
+  tasks:
+   - block:
+      - name: Install http
+        yum:
+         name: http
+         state: present
+     rescue:
+      - name: Install httpd
+        yum:
+         name: httpd
+         state: present
+     always:
+      - name: Check url response
+        uri:
+         url: "{{item}}"
+        with_items:
+         - http://3.133.116.18
+         - http://18.226.165.154
+         
+...
