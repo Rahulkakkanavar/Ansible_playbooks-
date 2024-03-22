@@ -1,0 +1,20 @@
+# This is an example of loops where we want two different variables
+# Ex: state=absent & state=present in a same playbook
+
+---
+- name: Install software packages
+  hosts: all
+  become: true
+  tasks:
+   - name: Install software
+     yum:
+      name: "{{item.a}}"
+      state: "{{item.b}}"
+      update_cache: "{{item.c}}"
+     with_items:
+      - {a: tree,b: present,c: no}
+      - {a: git,b: absent,c: no}
+      - {a: java-1.8.0-openjdk-devel.x86_64,b: absent,c: no}
+      - {a: nginx,b: present,c: yes}
+...
+
