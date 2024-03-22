@@ -1,0 +1,16 @@
+---
+- name: Using play scope variable
+  hosts: all
+  become: true
+  vars:
+   - a: tree
+   - b: present
+   - c: no
+  tasks:
+   - name: Installing software packages
+     yum: 
+      name: "{{a}}"
+      state: "{{b}}"
+      update_cache: "{{c}}"
+...
+
